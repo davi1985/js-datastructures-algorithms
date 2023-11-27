@@ -1,6 +1,6 @@
 export class Stack<T> {
   private count: number;
-  private items: any;
+  private items: { [key: string]: T };
 
   constructor() {
     this.count = 0;
@@ -12,9 +12,9 @@ export class Stack<T> {
     this.count++;
   }
 
-  pop(): T | undefined {
+  pop(): T {
     if (this.isEmpty()) {
-      return undefined;
+      throw new Error("Stack is empty");
     }
 
     this.count--;
@@ -24,9 +24,9 @@ export class Stack<T> {
     return result;
   }
 
-  peek(): T | undefined {
+  peek(): T {
     if (this.isEmpty()) {
-      return undefined;
+      throw new Error("Stack is empty");
     }
 
     return this.items[this.count - 1];
@@ -46,17 +46,7 @@ export class Stack<T> {
   }
 
   toString(): string {
-    if (this.isEmpty()) {
-      return "";
-    }
-
-    let objString = `${this.items[0]}`;
-
-    for (let i = 1; i < this.count; i++) {
-      objString = `${objString}, ${this.items[i]}`;
-    }
-
-    return objString;
+    return Object.values(this.items).toString();
   }
 }
 
